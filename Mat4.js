@@ -12,6 +12,7 @@ class Mat4{
     }
 
     translate(tx,ty,tz){
+        this.identity();
         this.elements[3] = tx;
         this.elements[7] = ty;
         this.elements[11] = tz;
@@ -54,15 +55,15 @@ class Mat4{
         this.elements[15] = 1;
     }
 
-    multiply(m2){
+    mult(A, B){
         const result = new Mat4();
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 result.elements[i * 4 + j] =
-                    this.elements[i * 4 + 0] * m2.elements[0 * 4 + j] +
-                    this.elements[i * 4 + 1] * m2.elements[1 * 4 + j] +
-                    this.elements[i * 4 + 2] * m2.elements[2 * 4 + j] +
-                    this.elements[i * 4 + 3] * m2.elements[3 * 4 + j];
+                    A.elements[i * 4 + 0] * B.elements[0 * 4 + j] +
+                    A.elements[i * 4 + 1] * B.elements[1 * 4 + j] +
+                    A.elements[i * 4 + 2] * B.elements[2 * 4 + j] +
+                    A.elements[i * 4 + 3] * B.elements[3 * 4 + j];
             }
         }
         return result;
@@ -90,7 +91,7 @@ class Mat4{
     }
 
     asFloat32Array(){
-        return Array.from(this.elements);
+        return new Float32Array(this.elements);
     }
     
 }
